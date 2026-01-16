@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../providers/auth_provider.dart';
+import '../providers/language_provider.dart';
 import '../utils/constants.dart';
 import '../utils/routes.dart';
+import '../utils/app_localizations.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/metric_card.dart';
 
@@ -16,6 +18,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final authProvider = Provider.of<AuthProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    final l = AppLocalizations.of(languageProvider.languageCode);
     final userName = authProvider.user?.name.split(' ').first ?? 'User';
 
     return Scaffold(
@@ -50,7 +54,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Greeting
-              _buildGreeting(userName, isDark)
+              _buildGreeting(userName, isDark, l)
                   .animate()
                   .fadeIn(duration: 500.ms)
                   .slideX(begin: -0.1, end: 0),
@@ -58,7 +62,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // Today's Tip Card
-              _buildTipCard(isDark)
+              _buildTipCard(isDark, l)
                   .animate()
                   .fadeIn(delay: 200.ms, duration: 500.ms)
                   .slideY(begin: 0.1, end: 0),
@@ -67,7 +71,7 @@ class HomeScreen extends StatelessWidget {
 
               // Stats Header
               Text(
-                "Today's Progress",
+                l.todaysProgress,
                 style: AppTextStyles.headlineMedium.copyWith(
                   color: isDark ? AppConstants.textPrimary : AppConstants.textPrimaryLight,
                 ),
@@ -78,13 +82,13 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Metrics Grid
-              _buildMetricsGrid(context, isDark),
+              _buildMetricsGrid(context, isDark, l),
 
               const SizedBox(height: 24),
 
               // Quick Actions
               Text(
-                'Quick Start',
+                l.quickStart,
                 style: AppTextStyles.headlineMedium.copyWith(
                   color: isDark ? AppConstants.textPrimary : AppConstants.textPrimaryLight,
                 ),
@@ -95,7 +99,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               // Quick Action Cards
-              _buildQuickActions(context, isDark),
+              _buildQuickActions(context, isDark, l),
 
               const SizedBox(height: 24),
             ],
@@ -106,15 +110,15 @@ class HomeScreen extends StatelessWidget {
   }
 
   /// Builds the greeting section with user name.
-  Widget _buildGreeting(String userName, bool isDark) {
+  Widget _buildGreeting(String userName, bool isDark, AppLocalizations l) {
     final hour = DateTime.now().hour;
     String greeting;
     if (hour < 12) {
-      greeting = 'Good Morning';
+      greeting = l.goodMorning;
     } else if (hour < 17) {
-      greeting = 'Good Afternoon';
+      greeting = l.goodAfternoon;
     } else {
-      greeting = 'Good Evening';
+      greeting = l.goodEvening;
     }
 
     return Column(
@@ -138,7 +142,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   /// Builds the motivational tip card.
-  Widget _buildTipCard(bool isDark) {
+  Widget _buildTipCard(bool isDark, AppLocalizations l) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppConstants.paddingLG),
@@ -167,7 +171,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '💡 Tip of the Day',
+                  '💡 ${l.tipOfTheDay}',
                   style: AppTextStyles.labelLarge.copyWith(
                     color: Colors.white.withValues(alpha: 0.9),
                   ),
@@ -202,7 +206,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   /// Builds the metrics grid using LayoutBuilder for responsiveness.
-  Widget _buildMetricsGrid(BuildContext context, bool isDark) {
+  Widget _buildMetricsGrid(BuildContext context, bool isDark, AppLocalizations l) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final crossAxisCount = constraints.maxWidth > 600 ? 4 : 2;
@@ -216,19 +220,19 @@ class HomeScreen extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            const MetricCard(
+            MetricCard(
               icon: Icons.directions_walk,
               value: '8,432',
-              label: 'Steps',
+              label: l.steps,
               iconColor: AppConstants.primaryColor,
               trend: '+12%',
               isPositiveTrend: true,
             ).animate().fadeIn(delay: 400.ms, duration: 400.ms).scale(begin: const Offset(0.9, 0.9), end: const Offset(1, 1)),
             
-            const MetricCard(
+            MetricCard(
               icon: Icons.local_fire_department,
               value: '1,240',
-              label: 'Calories',
+              label: l.calories,
               iconColor: Colors.orange,
               trend: '+5%',
               isPositiveTrend: true,
@@ -237,16 +241,16 @@ class HomeScreen extends StatelessWidget {
             MetricCard(
               icon: Icons.timer,
               value: '45',
-              label: 'Active Min',
+              label: l.activeMin,
               iconColor: AppConstants.accentColor,
               trend: '-3%',
               isPositiveTrend: false,
             ).animate().fadeIn(delay: 500.ms, duration: 400.ms).scale(begin: const Offset(0.9, 0.9), end: const Offset(1, 1)),
             
-            const MetricCard(
+            MetricCard(
               icon: Icons.water_drop,
               value: '6/8',
-              label: 'Water',
+              label: l.water,
               iconColor: Colors.blue,
             ).animate().fadeIn(delay: 550.ms, duration: 400.ms).scale(begin: const Offset(0.9, 0.9), end: const Offset(1, 1)),
           ],
@@ -256,14 +260,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   /// Builds quick action buttons.
-  Widget _buildQuickActions(BuildContext context, bool isDark) {
+  Widget _buildQuickActions(BuildContext context, bool isDark, AppLocalizations l) {
     return Row(
       children: [
         Expanded(
           child: _buildActionButton(
             context: context,
             icon: Icons.fitness_center,
-            label: 'Workouts',
+            label: l.workouts,
             color: AppConstants.primaryColor,
             onTap: () => Navigator.pushNamed(context, AppRoutes.workoutLibrary),
             isDark: isDark,
@@ -277,7 +281,7 @@ class HomeScreen extends StatelessWidget {
           child: _buildActionButton(
             context: context,
             icon: Icons.restaurant_menu,
-            label: 'Meals',
+            label: l.meals,
             color: AppConstants.accentColor,
             onTap: () => Navigator.pushNamed(context, AppRoutes.mealPlanner),
             isDark: isDark,
