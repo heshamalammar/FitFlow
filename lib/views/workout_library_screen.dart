@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../models/workout_model.dart';
+import '../providers/language_provider.dart';
 import '../utils/constants.dart';
 import '../utils/routes.dart';
+import '../utils/app_localizations.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/workout_card.dart';
 

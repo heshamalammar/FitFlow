@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../providers/theme_provider.dart';
 import '../providers/language_provider.dart';
 import '../utils/constants.dart';
+import '../utils/app_localizations.dart';
 import '../widgets/app_drawer.dart';
 
 /// SettingsScreen provides app configuration options.
@@ -15,6 +16,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    final l = AppLocalizations.of(languageProvider.languageCode);
 
     return Scaffold(
       backgroundColor: isDark ? AppConstants.backgroundDark : AppConstants.backgroundLight,
@@ -32,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-          'Settings',
+          l.settings,
           style: AppTextStyles.headlineMedium.copyWith(
             color: isDark ? AppConstants.textPrimary : AppConstants.textPrimaryLight,
           ),
@@ -45,7 +48,7 @@ class SettingsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Appearance Section
-            _buildSectionHeader('Appearance', isDark)
+            _buildSectionHeader(l.appearance, isDark)
                 .animate()
                 .fadeIn(duration: 400.ms),
 
@@ -57,8 +60,8 @@ class SettingsScreen extends StatelessWidget {
               isDark: isDark,
               icon: isDark ? Icons.dark_mode : Icons.light_mode,
               iconColor: isDark ? Colors.amber : AppConstants.primaryColor,
-              title: 'Dark Mode',
-              subtitle: isDark ? 'Currently using dark theme' : 'Currently using light theme',
+              title: l.darkMode,
+              subtitle: l.switchTheme,
               trailing: Switch(
                 value: themeProvider.isDarkMode,
                 onChanged: (_) => themeProvider.toggleTheme(),
@@ -97,7 +100,7 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Notifications Section
-            _buildSectionHeader('Notifications', isDark)
+            _buildSectionHeader(l.notifications, isDark)
                 .animate()
                 .fadeIn(delay: 150.ms, duration: 400.ms),
 
@@ -108,8 +111,8 @@ class SettingsScreen extends StatelessWidget {
               isDark: isDark,
               icon: Icons.notifications_outlined,
               iconColor: AppConstants.accentColor,
-              title: 'Push Notifications',
-              subtitle: 'Receive workout reminders',
+              title: l.pushNotifications,
+              subtitle: l.isArabic ? 'تلقي تذكيرات التمارين' : 'Receive workout reminders',
               trailing: Switch(
                 value: true,
                 onChanged: (_) {},
@@ -127,8 +130,8 @@ class SettingsScreen extends StatelessWidget {
               isDark: isDark,
               icon: Icons.email_outlined,
               iconColor: Colors.blue,
-              title: 'Email Updates',
-              subtitle: 'Weekly progress reports',
+              title: l.emailUpdates,
+              subtitle: l.isArabic ? 'تقارير التقدم الأسبوعية' : 'Weekly progress reports',
               trailing: Switch(
                 value: false,
                 onChanged: (_) {},
@@ -142,7 +145,7 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
 
             // About Section
-            _buildSectionHeader('About', isDark)
+            _buildSectionHeader(l.about, isDark)
                 .animate()
                 .fadeIn(delay: 300.ms, duration: 400.ms),
 
@@ -168,8 +171,8 @@ class SettingsScreen extends StatelessWidget {
               isDark: isDark,
               icon: Icons.policy_outlined,
               iconColor: Colors.grey,
-              title: 'Privacy Policy',
-              subtitle: 'View our privacy policy',
+              title: l.privacyPolicy,
+              subtitle: l.isArabic ? 'عرض سياسة الخصوصية' : 'View our privacy policy',
               onTap: () {},
             )
                 .animate()
@@ -183,8 +186,8 @@ class SettingsScreen extends StatelessWidget {
               isDark: isDark,
               icon: Icons.description_outlined,
               iconColor: Colors.grey,
-              title: 'Terms of Service',
-              subtitle: 'View terms and conditions',
+              title: l.termsOfService,
+              subtitle: l.isArabic ? 'عرض الشروط والأحكام' : 'View terms and conditions',
               onTap: () {},
             )
                 .animate()
@@ -194,7 +197,7 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 32),
 
             // Developer Section
-            _buildSectionHeader('Developer', isDark),
+            _buildSectionHeader(l.developer, isDark),
             const SizedBox(height: 12),
 
             _buildSettingCard(

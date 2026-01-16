@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../providers/auth_provider.dart';
+import '../providers/language_provider.dart';
 import '../utils/constants.dart';
 import '../utils/validators.dart';
 import '../utils/routes.dart';
+import '../utils/app_localizations.dart';
 import '../widgets/custom_text_field.dart';
 
 /// SignUpScreen handles new user registration.

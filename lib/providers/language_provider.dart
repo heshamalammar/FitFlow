@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 /// LanguageProvider manages the app's language state.
 /// Supports Arabic (ar) and English (en).
+/// Default language is Arabic.
 class LanguageProvider extends ChangeNotifier {
-  Locale _locale = const Locale('en');
+  Locale _locale = const Locale('ar');  // Default to Arabic
 
   Locale get locale => _locale;
   bool get isArabic => _locale.languageCode == 'ar';
