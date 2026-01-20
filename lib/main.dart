@@ -47,10 +47,9 @@ class FitFlowApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             
             // Localization Configuration
-            locale: languageProvider.locale,
+            locale: const Locale('en'),
             supportedLocales: const [
               Locale('en'), // English
-              Locale('ar'), // Arabic
             ],
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,

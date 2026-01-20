@@ -74,29 +74,6 @@ class SettingsScreen extends StatelessWidget {
 
             const SizedBox(height: 8),
 
-            // Language Toggle
-            Builder(
-              builder: (context) {
-                final languageProvider = Provider.of<LanguageProvider>(context);
-                return _buildSettingCard(
-                  context: context,
-                  isDark: isDark,
-                  icon: Icons.language,
-                  iconColor: AppConstants.accentColor,
-                  title: languageProvider.isArabic ? 'اللغة' : 'Language',
-                  subtitle: languageProvider.isArabic ? 'العربية' : 'English',
-                  trailing: Switch(
-                    value: languageProvider.isArabic,
-                    onChanged: (_) => languageProvider.toggleLanguage(),
-                    activeColor: AppConstants.primaryColor,
-                  ),
-                );
-              },
-            )
-                .animate()
-                .fadeIn(delay: 120.ms, duration: 400.ms)
-                .slideX(begin: -0.1, end: 0),
-
             const SizedBox(height: 24),
 
             // Notifications Section
@@ -112,7 +89,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.notifications_outlined,
               iconColor: AppConstants.accentColor,
               title: l.pushNotifications,
-              subtitle: l.isArabic ? 'تلقي تذكيرات التمارين' : 'Receive workout reminders',
+              subtitle: 'Receive workout reminders',
               trailing: Switch(
                 value: true,
                 onChanged: (_) {},
@@ -131,7 +108,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.email_outlined,
               iconColor: Colors.blue,
               title: l.emailUpdates,
-              subtitle: l.isArabic ? 'تقارير التقدم الأسبوعية' : 'Weekly progress reports',
+              subtitle: 'Weekly progress reports',
               trailing: Switch(
                 value: false,
                 onChanged: (_) {},
@@ -172,7 +149,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.policy_outlined,
               iconColor: Colors.grey,
               title: l.privacyPolicy,
-              subtitle: l.isArabic ? 'عرض سياسة الخصوصية' : 'View our privacy policy',
+              subtitle: 'View our privacy policy',
               onTap: () {},
             )
                 .animate()
@@ -187,7 +164,7 @@ class SettingsScreen extends StatelessWidget {
               icon: Icons.description_outlined,
               iconColor: Colors.grey,
               title: l.termsOfService,
-              subtitle: l.isArabic ? 'عرض الشروط والأحكام' : 'View terms and conditions',
+              subtitle: 'View terms and conditions',
               onTap: () {},
             )
                 .animate()

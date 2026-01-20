@@ -7,6 +7,7 @@ import '../views/workout_library_screen.dart';
 import '../views/workout_details_screen.dart';
 import '../views/meal_planner_screen.dart';
 import '../views/settings_screen.dart';
+import '../views/onboarding_screen.dart';
 import '../models/workout_model.dart';
 
 /// Named route constants for navigation.
@@ -21,6 +22,7 @@ class AppRoutes {
   static const String workoutDetails = '/workout-details';
   static const String mealPlanner = '/meals';
   static const String settings = '/settings';
+  static const String onboarding = '/onboarding';
 }
 
 /// Route generator for the application.
@@ -33,6 +35,9 @@ class AppRouter {
     switch (settings.name) {
       case AppRoutes.splash:
         return _buildRoute(const SplashScreen(), settings);
+
+      case AppRoutes.onboarding:
+        return _buildRoute(const OnboardingScreen(), settings);
 
       case AppRoutes.login:
         return _buildRoute(const LoginScreen(), settings);

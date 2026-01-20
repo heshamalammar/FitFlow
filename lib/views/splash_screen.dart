@@ -19,11 +19,11 @@ class _SplashScreenState extends State<SplashScreen> {
     _navigateToLogin();
   }
 
-  /// Navigates to login screen after splash duration.
+  /// Navigates to onboarding screen after splash duration.
   Future<void> _navigateToLogin() async {
     await Future.delayed(AppConstants.splashDuration);
     if (mounted) {
-      Navigator.pushReplacementNamed(context, AppRoutes.login);
+      Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
     }
   }
 
@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: AppConstants.primaryColor.withValues(alpha: 0.4),
+                    color: AppConstants.primaryColor.withOpacity(0.4),
                     blurRadius: 30,
                     spreadRadius: 5,
                   ),
@@ -107,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: CircularProgressIndicator(
                 strokeWidth: 3,
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  AppConstants.primaryColor.withValues(alpha: 0.7),
+                  AppConstants.primaryColor.withOpacity(0.7),
                 ),
               ),
             )
